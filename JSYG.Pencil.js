@@ -34,6 +34,10 @@
     Pencil.prototype.constructor = Pencil;
     
     /**
+     * zone sur laquelle on affecte les écouteurs d'évènements (si null, prend le parent svg le plus éloigné)
+     */
+    Pencil.prototype.area = null;
+    /**
      * Type de segment utilisés pour le tracé ("L","T", etc). La valeur spéciale "autosmooth" permet un lissage
      * automatique sans se soucier des points de controle.
      */
@@ -112,7 +116,7 @@
         if (!this.node.parentNode) throw new Error("Il faut attacher l'objet path à l'arbre DOM");
         
         var path = new JSYG.Path(this.node),
-        jSvg = path.offsetParent('farthest'),
+        jSvg = this.area ? new JSYG(this.area) : path.offsetParent('farthest'),
         autoSmooth = this.segment.toLowerCase() === 'autosmooth',
         segment = autoSmooth ? 'L' : this.segment,
         mtx = path.getMtx('screen').inverse(),
@@ -169,7 +173,7 @@
         }
         
         function dblclick(e,keepLastSeg) {
-                
+            
             var nbSegs = path.nbSegs();
             
             if (keepLastSeg!==true) {
@@ -216,7 +220,6 @@
         });		
         
         mousedown(e);
-        mousemove(e);
         
         return this;
     };
@@ -233,7 +236,7 @@
         var path = new JSYG.Path(this.node),
         autoSmooth = this.segment.toLowerCase() === 'autosmooth',
         segment = autoSmooth ? 'L' : this.segment,
-        jSvg = path.offsetParent('farthest'),
+        jSvg = this.area ? new JSYG(this.area) : path.offsetParent('farthest'),
         mtx = path.getMtx('screen').inverse(),
         //cpt = 1,
         xy = new JSYG.Vect(e.clientX,e.clientY).mtx(mtx),
