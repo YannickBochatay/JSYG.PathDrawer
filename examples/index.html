@@ -22,8 +22,20 @@
     <body>
         <svg width="100%" height="900px">
         </svg>
+        Method : 
+        <label>
+            <input type="radio" name="method" value="point2point" checked="checked"/> Point to point
+        </label>
+        <label>
+            <input type="radio" name="method" value="freehand"/> Free Hand
+        </label>
+        
         <script>
             var pencil = new JSYG.Pencil();
+            
+            $('[name=method]').on("change",function() {
+                if (this.checked) pencil.type = this.value;
+            }).trigger("change");
             
             $("svg").on("mousedown",function(e) {
                

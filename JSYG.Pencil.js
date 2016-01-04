@@ -169,8 +169,12 @@
         }
         
         function dblclick(e,keepLastSeg) {
+                
+            var nbSegs = path.nbSegs();
             
-            if (keepLastSeg!==true) path.removeSeg(path.nbSegs()-1);
+            if (keepLastSeg!==true) {
+                path.removeSeg(nbSegs-1).removeSeg(nbSegs-2);
+            }
             
             if (that.trigger('beforeend',that.node,e) === false) return;
             
