@@ -8,7 +8,7 @@
         <script src="../bower_components/jquery/dist/jquery.js"></script>
         <script src="../bower_components/jsyg/JSYG.js"></script>
         <script src="../bower_components/jsyg-path/JSYG.Path.js"></script>
-        <script src="../JSYG.Pencil.js"></script>
+        <script src="../JSYG.PathDrawer.js"></script>
         <style>
             svg {
                 border:1px solid gray;
@@ -31,7 +31,7 @@
         </label>
         
         <script>
-            var pencil = new JSYG.Pencil();
+            var pencil = new JSYG.PathDrawer();
             
             $('[name=method]').on("change",function() {
                 if (this.checked) pencil.type = this.value;

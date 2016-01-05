@@ -3,7 +3,7 @@
 
 (function(factory) {
     
-    if (typeof define != "undefined" && define.amd) define("jsyg-pencil",["jsyg-path"],factory);
+    if (typeof define != "undefined" && define.amd) define("jsyg-pathdrawer",["jsyg-path"],factory);
     else if (typeof JSYG != "undefined") {
         if (JSYG.Path) factory(JSYG);
         else throw new Error("You need JSYG.Path");
@@ -17,80 +17,80 @@
     /**
      * Tracé de chemins SVG à la souris
      * @param opt optionnel, objet définissant les options.
-     * @returns {Pencil}
+     * @returns {PathDrawer}
      */
-    function Pencil(opt) {
+    function PathDrawer(opt) {
                 
         if (opt) this.set(opt);
     }
     
-    Pencil.prototype = new JSYG.StdConstruct();
+    PathDrawer.prototype = new JSYG.StdConstruct();
     
-    Pencil.prototype.constructor = Pencil;
+    PathDrawer.prototype.constructor = PathDrawer;
     
     /**
      * zone sur laquelle on affecte les écouteurs d'évènements (si null, prend le parent svg le plus éloigné)
      */
-    Pencil.prototype.area = null;
+    PathDrawer.prototype.area = null;
     /**
      * Type de segment utilisés pour le tracé ("L","T", etc). La valeur spéciale "autosmooth" permet un lissage
      * automatique sans se soucier des points de controle.
      */
-    Pencil.prototype.segment = 'autosmooth';
+    PathDrawer.prototype.segment = 'autosmooth';
     /**
      * Type de tracé "freehand" (à main levée) ou "point2point" (ou tout autre valeur) pour tracé point par point.
      */
-    Pencil.prototype.type = 'freehand';
+    PathDrawer.prototype.type = 'freehand';
     /**
      * Indique si un tracé est en cours ou non
      */
-    Pencil.prototype.inProgress = false;
+    PathDrawer.prototype.inProgress = false;
     /**
      * Pour le tracé à main levée, indique le nombre d'évènement "mousemove" à ignorer entre chaque point
      * (sinon on aurait trop de points)
      */
-    //Pencil.prototype.skip = 4;
+    //PathDrawer.prototype.skip = 4;
     /**
      * Pour le tracé à main levée, indique la tolérance (en pixels) pour la simplification de la courbe
      * @link http://mourner.github.io/simplify-js/
      */
-    Pencil.prototype.simplify = 1;
+    PathDrawer.prototype.simplify = 1;
     /**
      * Indique la force de l'aimantation en pixels écran des points extremes entre eux.
      * La valeur null permet d'annuler l'aimantation
      */
-    Pencil.prototype.strengthClosingMagnet = 5;
+    PathDrawer.prototype.strengthClosingMagnet = 5;
     /**
      * Ferme systématiquement ou non le chemin (segment Z)
      */
-    Pencil.prototype.closePath = false;
+    PathDrawer.prototype.closePath = false;
     /**
      * fonction(s) à éxécuter pendant le tracé
      */
-    Pencil.prototype.ondraw = false;
+    PathDrawer.prototype.ondraw = false;
     /**
      * fonction(s) à éxécuter avant la fin du tracé
      */
-    Pencil.prototype.onbeforeend = false;
+    PathDrawer.prototype.onbeforeend = false;
     /**
      * fonction(s) à éxécuter à la fin du tracé
      */
-    Pencil.prototype.onend = false;
+    PathDrawer.prototype.onend = false;
     /**
      * fonction(s) à éxécuter avant un nouveau point (type "point2point" uniquement)
      */
-    Pencil.prototype.onbeforenewseg = false;
+    PathDrawer.prototype.onbeforenewseg = false;
     /**
      * fonction(s) à éxécuter à la création d'un nouveau point
      */
-    Pencil.prototype.onnewseg = false;
+    PathDrawer.prototype.onnewseg = false;
     
     /**
      * Commence le tracé point à point.
      * @param e objet JSYG.Event
-     * @returns {Pencil}
+     * @returns {PathDrawer}
      */
-    Pencil.prototype.drawPoint2Point = function(path,e) {
+    PathDrawer.prototype.drawPoint2Point = function(path,e) {
         
         path = new JSYG.Path(path);
         
@@ -210,9 +210,9 @@
     /**
      * Commence le tracé à main levée.
      * @param e objet Event (évènement mousedown).
-     * @returns {Pencil}
+     * @returns {PathDrawer}
      */
-    Pencil.prototype.drawFreeHand = function(path,e) {
+    PathDrawer.prototype.drawFreeHand = function(path,e) {
         
         path = new JSYG.Path(path);
         
@@ -294,7 +294,7 @@
      * @param e objet JSYG.Event (évènement mousedown).
      * @returns
      */
-    Pencil.prototype.draw = function(path,e) {
+    PathDrawer.prototype.draw = function(path,e) {
         
         if (this.type.toLowerCase() === 'freehand') this.drawFreeHand(path,e);
         else this.drawPoint2Point(path,e);
@@ -304,12 +304,12 @@
     
     /**
      * Termine le tracé.
-     * @returns {Pencil}
+     * @returns {PathDrawer}
      */
-    Pencil.prototype.end = function() { return this; };
+    PathDrawer.prototype.end = function() { return this; };
     
-    JSYG.Pencil = Pencil;
+    JSYG.PathDrawer = PathDrawer;
     
-    return Pencil;
+    return PathDrawer;
     
 });
