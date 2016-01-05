@@ -16,16 +16,11 @@
     
     /**
      * Tracé de chemins SVG à la souris
-     * @param arg optionnel, argument JSYG faisant référence à un chemin SVG. Si non défini, un nouveau chemin est créé.
-     * Il pourra étre modifié par la méthode setNode.
      * @param opt optionnel, objet définissant les options.
      * @returns {Pencil}
      */
-    function Pencil(arg,opt) {
-        
-        if (!arg) arg = '<path>';
-        this.setNode(arg);
-        
+    function Pencil(opt) {
+                
         if (opt) this.set(opt);
     }
     
@@ -89,33 +84,19 @@
      * fonction(s) à éxécuter à la création d'un nouveau point
      */
     Pencil.prototype.onnewseg = false;
-    /**
-     * définition du chemin svg lié au pinceau.
-     */
-    Pencil.prototype.setNode = function(arg) {
-        this.node = new JSYG(arg)[0];
-        return this;
-    };
-    /**
-     * Attache le chemin svg au parent précisé.
-     * @param arg argument JSYG parent.
-     * @returns {Pencil}
-     */
-    Pencil.prototype.appendTo = function(arg) {
-        new JSYG(this.node).appendTo(arg);
-        return this;
-    };
     
     /**
      * Commence le tracé point à point.
      * @param e objet JSYG.Event
      * @returns {Pencil}
      */
-    Pencil.prototype.drawPoint2Point = function(e) {
+    Pencil.prototype.drawPoint2Point = function(path,e) {
         
-        if (!this.node.parentNode) throw new Error("Il faut attacher l'objet path à l'arbre DOM");
+        path = new JSYG.Path(path);
         
-        var path = new JSYG.Path(this.node),
+        if (!path.parent().length) throw new Error("Il faut attacher l'objet path à l'arbre DOM");
+        
+        var node = path[0],
         jSvg = this.area ? new JSYG(this.area) : path.offsetParent('farthest'),
         autoSmooth = this.segment.toLowerCase() === 'autosmooth',
         segment = autoSmooth ? 'L' : this.segment,
@@ -150,17 +131,17 @@
             
             if (autoSmooth) path.autoSmooth(nbSegs-1);
             
-            that.trigger('draw',that.node,e);
+            that.trigger('draw',node,e);
         }
         
         function mousedown(e) {
             
-            if (that.trigger('beforenewseg',that.node,e) === false) return;
+            if (that.trigger('beforenewseg',node,e) === false) return;
             
             //si la courbe est fermée, un clic suffit pour terminer.
             if (path.nbSegs() > 3 && path.isClosed()) {
                 
-                if (that.trigger('beforeend',that.node,e) === false) return;
+                if (that.trigger('beforeend',node,e) === false) return;
                 return that.end();
             }
             
@@ -173,14 +154,14 @@
             
             if (autoSmooth) path.autoSmooth(path.nbSegs()-1);
             
-            that.trigger('newseg',that.node,e);
+            that.trigger('newseg',node,e);
         }
         
         function dblclick(e,keepLastSeg) {
             
             path.removeSeg(path.nbSegs()-1);
             
-            if (that.trigger('beforeend',that.node,e) === false) return;
+            if (that.trigger('beforeend',node,e) === false) return;
             
             path.removeSeg(path.nbSegs()-1);
             
@@ -206,7 +187,7 @@
             
             that.inProgress = false;
             
-            that.trigger('end',that.node,e);
+            that.trigger('end',node,e);
             
             that.end = function() { return this; };
         };
@@ -231,11 +212,13 @@
      * @param e objet Event (évènement mousedown).
      * @returns {Pencil}
      */
-    Pencil.prototype.drawFreeHand = function(e) {
+    Pencil.prototype.drawFreeHand = function(path,e) {
         
-        if (!this.node.parentNode) throw new Error("Il faut attacher l'objet path à l'arbre DOM");
+        path = new JSYG.Path(path);
         
-        var path = new JSYG.Path(this.node),
+        if (!path.parent().length) throw new Error("Il faut attacher l'objet path à l'arbre DOM");
+        
+        var node = path[0],
         autoSmooth = this.segment.toLowerCase() === 'autosmooth',
         segment = autoSmooth ? 'L' : this.segment,
         jSvg = this.area ? new JSYG(this.area) : path.offsetParent('farthest'),
@@ -250,15 +233,15 @@
             
             //if (!that.skip || cpt % (that.skip+1) === 0)  {
             path.addSeg(segment,xy.x,xy.y,xy.x,xy.y,xy.x,xy.y);
-            that.trigger('newseg',that.node,e);
+            that.trigger('newseg',node,e);
             //}
             //cpt++;
-            that.trigger('draw',that.node,e);
+            that.trigger('draw',node,e);
         }
         
         function mouseup(e) {
             that.end();
-            that.trigger('end',that.node,e);
+            that.trigger('end',node,e);
         }
         
         this.end = function() {
@@ -311,10 +294,10 @@
      * @param e objet JSYG.Event (évènement mousedown).
      * @returns
      */
-    Pencil.prototype.draw = function(e) {
+    Pencil.prototype.draw = function(path,e) {
         
-        if (this.type.toLowerCase() === 'freehand') this.drawFreeHand(e);
-        else this.drawPoint2Point(e);
+        if (this.type.toLowerCase() === 'freehand') this.drawFreeHand(path,e);
+        else this.drawPoint2Point(path,e);
         
         return this;
     };
