@@ -158,7 +158,11 @@
             if (that.trigger('beforenewseg',that.node,e) === false) return;
             
             //si la courbe est fermée, un clic suffit pour terminer.
-            if (path.nbSegs() > 3 && path.isClosed()) return dblclick(e,true);
+            if (path.nbSegs() > 3 && path.isClosed()) {
+                
+                if (that.trigger('beforeend',that.node,e) === false) return;
+                return that.end();
+            }
             
             if (e.detail === 2) return; //pas d'action au double-clic
             
@@ -174,17 +178,13 @@
         
         function dblclick(e,keepLastSeg) {
             
-            var nbSegs = path.nbSegs();
-            
-            if (keepLastSeg!==true) {
-                path.removeSeg(nbSegs-1).removeSeg(nbSegs-2);
-            }
+            path.removeSeg(path.nbSegs()-1);
             
             if (that.trigger('beforeend',that.node,e) === false) return;
             
-            that.end();
+            path.removeSeg(path.nbSegs()-1);
             
-            that.trigger('end',that.node,e);
+            that.end();
         }
         
         this.end = function() {
@@ -205,6 +205,8 @@
             });
             
             that.inProgress = false;
+            
+            that.trigger('end',that.node,e);
             
             that.end = function() { return this; };
         };
