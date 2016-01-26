@@ -250,9 +250,9 @@
             last = path.getLastSeg(),
             first = path.getSeg(0);
             
-            jSvg.off('mousemove',mousemove);
+            jSvg.off('mousemove touchmove',mousemove);
             
-            new JSYG(document).off('mouseup',mouseup);
+            new JSYG(document).off('mouseup touchend',mouseup);
             
             if (that.strengthClosingMagnet!=null) {
                 
@@ -276,8 +276,8 @@
             that.end = function() { return this; };
         };
         
-        jSvg.on('mousemove',mousemove);
-        new JSYG(document).on('mouseup',mouseup);
+        jSvg.on('mousemove touchmove',mousemove);
+        new JSYG(document).on('mouseup touchend',mouseup);
         
         e.preventDefault();
         
