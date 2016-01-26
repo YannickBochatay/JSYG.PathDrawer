@@ -34,6 +34,8 @@
             
         <script>
             
+            $('body').on('touchmove', function(e) { e.preventDefault(); });
+            
             $("rect").on("touchmove",function(e) {
                 
                 var touch = e.targetTouches[0];
