@@ -37,7 +37,7 @@
                 if (this.checked) pencil.type = this.value;
             }).trigger("change");
             
-            $("svg").on("mousedown",function(e) {
+            $("svg").on("mousedown touchstart",function(e) {
                
                if (pencil.inProgress) return;
                
