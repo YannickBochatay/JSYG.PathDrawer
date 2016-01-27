@@ -2,7 +2,6 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <title>JSYG tests</title>
         <link rel="stylesheet" href="bower_components/qunit/qunit/qunit.css">
         <script src="bower_components/qunit/qunit/qunit.js"></script>
@@ -22,7 +21,6 @@
     </head>
     <body>
         <svg width="100%" height="700px">
-        <rect x="0" width="300" height="200"/>
         </svg>
         Method : 
         <label>
@@ -31,17 +29,22 @@
         <label>
             <input type="radio" name="method" value="freehand"/> Free Hand
         </label>
-            
+        
         <script>
+            var pencil = new JSYG.PathDrawer();
             
-            $('body').on('touchmove', function(e) { e.preventDefault(); });
+            $('[name=method]').on("change",function() {
+                if (this.checked) pencil.type = this.value;
+            }).trigger("change");
             
-            $("rect").on("touchmove",function(e) {
-                
-                var touch = e.targetTouches[0];
-                
-                this.setAttribute('x',touch.pageX);
-                this.setAttribute('y',touch.pageX);
+            $("svg").on("mousedown",function(e) {
+               
+               if (pencil.inProgress) return;
+               
+               var path = new JSYG.Path();
+               path.appendTo(this);
+               
+               pencil.draw(path,e);
             });
         </script>
     </body>
