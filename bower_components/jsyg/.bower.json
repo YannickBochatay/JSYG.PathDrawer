@@ -18,7 +18,8 @@
     "jsyg-wrapper": "latest",
     "jsyg-utils": "latest",
     "jsyg-strutils": "latest",
-    "jsyg-stdconstruct": "latest"
+    "jsyg-stdconstruct": "latest",
+    "jsyg-vmouse": "latest"
   },
   "repository": {
     "type": "git",
@@ -44,12 +45,12 @@
     "library"
   ],
   "homepage": "https://github.com/YannickBochatay/JSYG",
-  "version": "0.3.9",
-  "_release": "0.3.9",
+  "version": "0.5.0",
+  "_release": "0.5.0",
   "_resolution": {
     "type": "version",
-    "tag": "v0.3.9",
-    "commit": "cfcddac4847c19dc8a50a07db7d9e03fcd811fd2"
+    "tag": "v0.5.0",
+    "commit": "7f5bbcb86671fcd80fab7729d8e7912d94f230a4"
   },
   "_source": "git://github.com/YannickBochatay/JSYG.git",
   "_target": "*",

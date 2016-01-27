@@ -273,15 +273,15 @@
             
             that.inProgress = false;
             
-            jSvg.off('mousemove',mousemove);
+            jSvg.off('vmousemove',mousemove);
             
-            new JSYG(document).off('mouseup',mouseup);
+            new JSYG(document).off('vmouseup',mouseup);
                         
             that.end = function() { return this; };
         };
         
-        jSvg.on('mousemove',mousemove);
-        new JSYG(document).on('mouseup',mouseup);
+        jSvg.on('vmousemove',mousemove);
+        new JSYG(document).on('vmouseup',mouseup);
         
         e.preventDefault();
         
