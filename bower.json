@@ -2,7 +2,7 @@
     "name": "jsyg-pathdrawer",
     "authors" : ["Yannick Bochatay"],
     "description" : "JSYG plugin for drawing interactive svg paths",
-    "main": "JSYG.Pencil.js",
+    "main": "JSYG.PathDrawer.js",
     "moduleType": [
         "amd",
         "globals"
