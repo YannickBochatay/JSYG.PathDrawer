@@ -1,6 +1,6 @@
 {
   "name": "jsyg-pathdrawer",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "JSYG plugin for drawing interactive svg paths",
   "main": "JSYG.PathDrawer.js",
   "directories": {
