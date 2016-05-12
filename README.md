@@ -9,17 +9,20 @@ drawing interactive svg paths with [JSYG framework](https://github.com/YannickBo
 bower install jsyg-pathdrawer
 ```
 
-##### Example
+##### Example with webpack/babel
 ```javascript
-var pencil = new JSYG.PathDrawer();
+import PathDrawer from "jsyg-pathdrawer"
 
-$("svg").on("mousedown",function(e) {
+let pencil = new PathDrawer();
+
+document.querySelector("svg").addEventListener("mousedown",function(e) {
                
     if (pencil.inProgress) return;
 
-    var path = JSYG('<path>');
+    let path = document.createElementNS("http://www.w3.org/2000/svg","path");
+    //with JSYG framework : path = JSYG("<path>")
 
-    path.appendTo(this);
+    this.appendChild(path);
 
     pencil.draw(path,e);
 });
