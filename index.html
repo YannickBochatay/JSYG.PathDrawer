@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>JSYG.PathDrawer</title>
         <script src="node_modules/jquery/dist/jquery.js"></script>
+        <script src="node_modules/pathseg/pathseg.js"></script>
         <script src="node_modules/jsyg/dist/JSYG.js"></script>
         <script src="node_modules/jsyg-path/JSYG.Path.js"></script>
         <script src="JSYG.PathDrawer.js"></script>
@@ -45,7 +46,7 @@
                 if (this.checked) pencil.type = this.value;
             }).trigger("change");
             
-            $("svg").on("vmousedown",function(e) {
+            $("svg").on("mousedown",function(e) {
                
                if (pencil.inProgress) return;
                

@@ -8,7 +8,6 @@ drawing interactive svg paths with [JSYG framework](https://github.com/YannickBo
 ```shell
 npm install jsyg-pathdrawer
 ```
-You can also install it with bower
 
 
 ##### Example with webpack/babel
