@@ -1,13 +1,14 @@
 {
   "name": "jsyg-pathdrawer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "JSYG plugin for drawing interactive svg paths",
   "main": "JSYG.PathDrawer.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "doc": "documentation readme JSYG.PathDrawer.js --section=API"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,9 @@
   },
   "homepage": "https://github.com/YannickBochatay/JSYG.PathDrawer#readme",
   "dependencies": {
-    "jsyg-path": "^1.0.0"
+    "jsyg-path": "^1.2.0"
+  },
+  "devDependencies": {
+    "documentation": "^14.0.3"
   }
 }
