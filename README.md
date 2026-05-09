@@ -2,6 +2,8 @@
 
 drawing interactive svg paths with [JSYG framework](https://github.com/YannickBochatay/JSYG)
 
+## ⚠️ Deprecated. Use [@jsyg/pathdrawer](https://github.com/YannickBochatay/jsyg-monorepo/tree/main/packages/pathdrawer) instead.
+
 #### Demo
 
 [http://yannickbochatay.github.io/JSYG.PathDrawer](http://yannickbochatay.github.io/JSYG.PathDrawer/)
